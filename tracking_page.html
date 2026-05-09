@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Track Complaint — VVITU</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+
+      body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #fff5f3;
+        padding: 30px;
+      }
+
+      .container {
+        max-width: 550px;
+        margin: 40px auto;
+        background: white;
+        padding: 35px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      }
+
+      h1 {
+        color: #F38471;
+        text-align: center;
+        margin-bottom: 5px;
+      }
+
+      .subtitle {
+        text-align: center;
+        color: gray;
+        font-size: 13px;
+        margin-bottom: 25px;
+      }
+
+      .divider {
+        border: none;
+        border-top: 1px solid #eee;
+        margin: 20px 0;
+      }
+
+      label {
+        display: block;
+        margin-top: 15px;
+        font-size: 13px;
+        color: #555;
+        font-weight: 600;
+      }
+
+      input {
+        width: 100%;
+        padding: 10px 12px;
+        margin-top: 5px;
+        border: 1.5px solid #ddd;
+        border-radius: 8px;
+        font-size: 14px;
+        font-family: 'Poppins', sans-serif;
+        box-sizing: border-box;
+      }
+
+      input:focus {
+        border-color: #F38471;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(243,132,113,0.15);
+      }
+
+      button {
+        width: 100%;
+        margin-top: 20px;
+        padding: 13px;
+        background-color: #F38471;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+      }
+
+      button:hover {
+        background-color: #e06b57;
+      }
+
+      /* Result card */
+      .result-card {
+        display: none;
+        margin-top: 25px;
+        padding: 20px 25px;
+        background: white;
+        border-radius: 10px;
+        border-left: 5px solid #F38471;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      }
+
+      .result-id {
+        font-size: 12px;
+        color: #F38471;
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+
+      .result-name {
+        font-size: 17px;
+        font-weight: 600;
+        color: #333;
+      }
+
+      .result-info {
+        font-size: 13px;
+        color: #777;
+        margin-top: 5px;
+      }
+
+      .result-description {
+        font-size: 13px;
+        color: #555;
+        margin-top: 10px;
+        padding: 10px;
+        background-color: #fff5f3;
+        border-radius: 6px;
+        line-height: 1.5;
+      }
+
+      .result-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 12px;
+      }
+
+      .result-date {
+        font-size: 11px;
+        color: #aaa;
+      }
+
+      .status-tag {
+        padding: 4px 14px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      .pending {
+        background-color: #fff3cd;
+        color: #856404;
+        border: 1px solid #ffc107;
+      }
+
+      .resolved {
+        background-color: #d1f5d3;
+        color: #1a6e22;
+        border: 1px solid #28a745;
+      }
+
+      .not-found {
+        display: none;
+        margin-top: 20px;
+        text-align: center;
+        color: red;
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .back-link {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+        font-size: 13px;
+        color: #F38471;
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      .back-link:hover {
+        text-decoration: underline;
+      }
+
+    </style>
+  </head>
+  <body>
+
+    <div class="container">
+
+      <h1>Track Your Complaint</h1>
+      <p class="subtitle">Enter your Complaint ID to check the current status</p>
+
+      <hr class="divider">
+
+      <label>Complaint ID</label>
+      <input type="text" id="complaint-id" placeholder="e.g. VVITU-784723" />
+
+      <button onclick="trackComplaint()">Track</button>
+
+      <!-- Not found message -->
+      <p class="not-found" id="not-found">
+        ❌ No complaint found with this ID. Please check and try again.
+      </p>
+
+      <!-- Result card -->
+      <div class="result-card" id="result-card">
+        <div class="result-id" id="result-id"></div>
+        <div class="result-name" id="result-name"></div>
+        <div class="result-info" id="result-info"></div>
+        <div class="result-info" id="result-category"></div>
+        <div class="result-description" id="result-description"></div>
+        <div class="result-footer">
+          <div class="result-date" id="result-date"></div>
+          <span class="status-tag" id="result-status"></span>
+        </div>
+      </div>
+
+      <a class="back-link" href="maincode.html">← Back to complaint form</a>
+
+    </div>
+
+    <script>
+      function trackComplaint() {
+        var inputId = document.getElementById("complaint-id").value.trim().toUpperCase();
+
+        // Hide previous results
+        document.getElementById("result-card").style.display = "none";
+        document.getElementById("not-found").style.display   = "none";
+
+        if (!inputId) {
+          alert("Please enter a Complaint ID.");
+          return;
+        }
+
+        // Get complaints from localStorage
+        var complaints = JSON.parse(localStorage.getItem("complaints") || "[]");
+
+        // Search for matching ID
+        var found = null;
+        for (var i = 0; i < complaints.length; i++) {
+          if (complaints[i].id.toUpperCase() === inputId) {
+            found = complaints[i];
+            break;
+          }
+        }
+
+        // If not found
+        if (!found) {
+          document.getElementById("not-found").style.display = "block";
+          return;
+        }
+
+        // Fill result card
+        document.getElementById("result-id").textContent          = found.id;
+        document.getElementById("result-name").textContent        = found.name;
+        document.getElementById("result-info").textContent        = "Roll: " + found.roll + "  |  Email: " + found.email;
+        document.getElementById("result-category").textContent    = "Category: " + found.category;
+        document.getElementById("result-description").textContent = found.description || "No description provided";
+        document.getElementById("result-date").textContent        = "Submitted on: " + found.date;
+
+        // Status tag
+        var statusEl = document.getElementById("result-status");
+        statusEl.textContent = found.status || "Pending";
+        statusEl.className   = "status-tag " + (found.status === "Resolved" ? "resolved" : "pending");
+
+        // Show the card
+        document.getElementById("result-card").style.display = "block";
+      }
+    </script>
+
+  </body>
+</html>
