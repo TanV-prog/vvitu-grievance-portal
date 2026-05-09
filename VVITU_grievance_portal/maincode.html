@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>VVITU Grievance Portal</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+
+      body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #fff5f3;
+        padding: 30px;
+
+        background-image: url('vvitu.png.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+      }
+
+      .container {
+        max-width: 550px;
+        margin: 40px auto;
+        background: rgba(255, 255, 255, 0.5);
+        padding: 35px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        backdrop-filter: blur(10px);
+      }
+
+      h1 {
+        color: #F38471;
+        text-align: center;
+        margin-bottom: 5px;
+      }
+
+      .subtitle {
+        text-align: center;
+        color: rgb(0, 0, 0);
+        font-size: 13px;
+        margin-bottom: 20px;
+      }
+
+      .divider {
+        border: none;
+        border-top: 1px solid #eee;
+        margin: 20px 0;
+      }
+
+      .section-title {
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #F38471;
+        margin-bottom: 10px;
+      }
+
+      label {
+        display: block;
+        margin-top: 15px;
+        font-size: 13px;
+        color: #555;
+        font-weight: 600;
+      }
+
+      input, select, textarea {
+        width: 100%;
+        padding: 10px 12px;
+        margin-top: 5px;
+        border: 1.5px solid #ddd;
+        border-radius: 8px;
+        font-size: 14px;
+        font-family: 'Poppins', sans-serif;
+        box-sizing: border-box;
+      }
+
+      input:focus, select:focus, textarea:focus {
+        border-color: #F38471;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(243,132,113,0.15);
+      }
+
+      textarea {
+        resize: vertical;
+        min-height: 100px;
+      }
+
+      .section {
+        display: none;
+        margin-top: 15px;
+        padding: 15px;
+        background-color: #fff5f3;
+        border-left: 4px solid #F38471;
+        border-radius: 8px;
+      }
+
+      .warning {
+        color: red;
+        font-size: 13px;
+        margin-top: 8px;
+        font-weight: 600;
+      }
+
+      button {
+        width: 100%;
+        margin-top: 25px;
+        padding: 13px;
+        background-color: #F38471;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+      }
+
+      button:hover {
+        background-color: #e06b57;
+      }
+
+    </style>
+  </head>
+  <body>
+   <!-- ADMIN ICON  -->
+   <div onclick="window.location.href='admin_portal.html'" title="Admin Login" style="
+    position: fixed;
+    top: 25px;
+    right: 25px;
+    width: 75px;
+    height: 75px;
+    background-color: #e8806d;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    font-size: 40px;
+   ">
+    👤
+   </div>
+
+  
+
+    <div class="container">
+
+      <!-- HEADER -->
+      <h1>VVITU Grievance Portal</h1>
+      <p class="subtitle">Vasireddy Venkatadri International Technological University, Guntur</p>
+       <p style="text-align:center; font-size:13px;">
+        Already submitted? 
+        <a href="tracking_page.html" style="color:#F38471; font-weight:600;">Track your complaint →</a>
+      </p>
+
+
+      <hr class="divider">
+
+      <!-- PERSONAL DETAILS -->
+      <div class="section-title">Personal Details</div>
+
+      <label>Full Name</label>
+      <input type="text" id="name" placeholder="Your full name" />
+
+      <label>Roll Number</label>
+      <input type="text" id="roll" placeholder="e.g. 2025DXXXX10658" />
+
+      <label>Phone Number</label>
+      <input type="tel" id="phone" placeholder="10-digit number" maxlenght="10" pattern="[0-9]{10}" />
+
+      <label>Email</label>
+      <input type="email" id="email" placeholder="e.g. example@gmail.com" />
+
+      <hr class="divider">
+
+      <!-- COMPLAINT CATEGORY -->
+      <div class="section-title">Complaint Details</div>
+      <label>What is your complaint about?</label>
+      <select id="category" onchange="showFields()">
+        <option value="">-- Select a category --</option>
+        <option value="hostel">Hostel</option>
+        <option value="faculty">Faculty Behaviour</option>
+        <option value="discipline">Discipline</option>
+        <option value="ragging">Ragging</option>
+        <option value="academic">Academic Issue</option>
+        <option value="canteen">Canteen</option>
+        <option value="transport">Transport</option>
+        <option value="other">Other</option>
+      </select>
+
+      <!-- HOSTEL -->
+      <div id="hostel-fields" class="section">
+        <label>Hostel Block</label>
+        <input type="text" placeholder="e.g. LH-2" />
+        <label>Room Number</label>
+        <input type="text" placeholder="e.g. 214" />
+        <label>Describe the Issue</label>
+        <textarea id="description" placeholder="What is the problem in your hostel?"></textarea>
+      </div>
+
+      <!-- FACULTY -->
+      <div id="faculty-fields" class="section">
+        <label>Faculty Name</label>
+        <input type="text" placeholder="Name of the faculty" />
+        <label>Subject They Teach</label>
+        <input type="text" placeholder="e.g. Python, Maths" />
+        <label>Describe the Issue</label>
+        <textarea id="description" placeholder="What is the problem with your faculty?"></textarea>
+      </div>
+
+      <!-- DISCIPLINE -->
+      <div id="discipline-fields" class="section">
+        <label>Your Department</label>
+        <select>
+          <option value="">Select department</option>
+          <option>CSE</option>
+          <option>ECE</option>
+          <option>EEE</option>
+          <option>Mech</option>
+          <option>Civil</option>
+          <option>MBA</option>
+          <option>CSM</option>
+          <option>CAD</option>
+          <option>CSC</option>
+        </select>
+        <label>Your Section</label>
+        <input type="text" placeholder="e.g. 1, 2, 3" />
+        <label>Describe the Issue</label>
+        <textarea id="description" placeholder="Describe the discipline issue..."></textarea>
+      </div>
+
+      <!-- RAGGING -->
+      <div id="ragging-fields" class="section">
+        <p class="warning">⚠️ Ragging is a serious offence. Your identity will be kept confidential.</p>
+        <label>Where did this happen?</label>
+        <input type="text" placeholder="e.g. Hostel corridor, Canteen" />
+        <label>Date and Time</label>
+        <input type="datetime-local" />
+        <label>Describe what happened</label>
+        <textarea id="description" placeholder="Describe the incident in detail..."></textarea>
+      </div>
+
+      <!-- ACADEMIC -->
+      <div id="academic-fields" class="section">
+        <label>Your Department</label>
+        <select>
+          <option value="">Select department</option>
+          <option>CSE</option>
+          <option>ECE</option>
+          <option>EEE</option>
+          <option>Mech</option>
+          <option>Civil</option>
+          <option>MBA</option>
+          <option>CSM</option>
+          <option>CAD</option>
+          <option>CSC</option>
+        </select>
+
+        <label>Subject (if related)</label>
+        <input type="text" placeholder="e.g. Python, DLSD" />
+
+        <label>Describe the Issue</label>
+       
+        <textarea id="description" placeholder="Describe your academic issue..."></textarea>
+      </div>
+
+      <!-- CANTEEN -->
+      <div id="canteen-fields" class="section">
+        <label>Where did this happen?</label>
+        <input type="text" placeholder="e.g. university block, LH-1" />
+
+        <label>Describe the Issue</label>
+        
+        <textarea id="description" placeholder="e.g. Food quality, hygiene, pricing..."></textarea>
+      </div>
+
+      <!-- TRANSPORT -->
+      <div id="transport-fields" class="section">
+        <label>Bus Number</label>
+        <input type="text" placeholder="e.g. Bus.no 65" />
+
+        <label>Describe the Issue</label>
+        
+        <textarea id="description" placeholder="e.g. Bus is always late, driver behaviour..."></textarea>
+      </div>
+
+      <!-- OTHER -->
+      <div id="other-fields" class="section">
+        <label>Describe the Issue</label>
+        
+        <textarea id="description" placeholder="Describe your issue in detail..."></textarea>
+      </div>
+       
+
+      <!-- SUBMIT -->
+      <button onclick="submitForm()">Submit Complaint</button>
+
+    </div>
+
+    <script>
+      function showFields() {
+        var sections = [
+          "hostel-fields",
+          "faculty-fields",
+          "discipline-fields",
+          "ragging-fields",
+          "academic-fields",
+          "canteen-fields",
+          "transport-fields",
+          "other-fields"
+        ];
+
+        for (var i = 0; i < sections.length; i++) {
+          document.getElementById(sections[i]).style.display = "none";
+        }
+
+        var category = document.getElementById("category").value;
+
+        if (category !== "") {
+          document.getElementById(category + "-fields").style.display = "block";
+        }
+      }
+
+
+      function submitForm() {
+        var name     = document.getElementById("name").value.trim();
+        var roll     = document.getElementById("roll").value.trim();
+        var phone    = document.getElementById("phone").value.trim();
+        var email    = document.getElementById("email").value.trim();
+        var category = document.getElementById("category").value;
+
+        var visibleSection = document.querySelector(".section[style*='block']");
+        var description = visibleSection ? visibleSection.querySelector("textarea:last-of-type").value.trim() : "";
+
+        if (!name || !roll || !phone || !email || !category || !description) {
+        alert("Please fill in all personal details and describe your issue.");
+        return;
+        }
+        if(phone.length!==10||isNaN(phone)){
+          alert("Please enter a valid 10-digit phone number.");
+          return;
+        }
+       
+
+        // Collect extra fields based on category
+        var extra = {};
+
+       if (category === "hostel") {
+       var inputs = visibleSection.querySelectorAll("input");
+       extra.block  = inputs[0].value.trim();
+       extra.room   = inputs[1].value.trim();
+
+       } else if (category === "faculty") {
+       var inputs = visibleSection.querySelectorAll("input");
+       extra.facultyName = inputs[0].value.trim();
+       extra.subject     = inputs[1].value.trim();
+
+       } else if (category === "discipline") {
+       extra.department = visibleSection.querySelector("select").value;
+       extra.section    = visibleSection.querySelector("input").value.trim();
+ 
+       } else if (category === "ragging") {
+        extra.location = visibleSection.querySelector("input").value.trim();
+        extra.datetime = visibleSection.querySelector("input[type='datetime-local']").value;
+
+       } else if (category === "academic") {
+       extra.department = visibleSection.querySelector("select").value;
+        extra.subject    = visibleSection.querySelector("input").value.trim();
+
+       } else if (category === "canteen") {
+       extra.location = visibleSection.querySelector("input").value.trim();
+
+       } else if (category === "transport") {
+       extra.busNumber = visibleSection.querySelector("input").value.trim();
+       }   
+
+       var complaint = {
+        id          : "VVITU-" + Date.now().toString().slice(-6),
+        name        : name,
+        roll        : roll,
+        phone       : phone,
+        email       : email,
+        category    : category,
+        extra       : extra,
+        description : description,
+        date        : new Date().toLocaleString(),
+        status      : "Pending"
+       };
+
+       var existing = JSON.parse(localStorage.getItem("complaints") || "[]");
+       existing.push(complaint);
+       localStorage.setItem("complaints", JSON.stringify(existing));
+
+        alert("Complaint submitted!\nYour Complaint ID: " + complaint.id + "\nSave this for tracking.");
+     }
+
+      
+
+     
+    </script>
+
+  </body>
+</html>
